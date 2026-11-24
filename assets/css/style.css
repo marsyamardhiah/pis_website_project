@@ -1,0 +1,1397 @@
+/* ==========================================================================
+   Passenger Information System — shared design system
+   Visual language: station signage & split-flap departure boards.
+   Keep page-specific tweaks here, not inline in individual pages, so the
+   look stays consistent as the rest of the group builds their pages.
+   ========================================================================== */
+
+:root {
+    --pis-navy:       #10273F;
+    --pis-navy-2:     #16314F;
+    --pis-amber:      #FFB300;
+    --pis-amber-dim:  #B07F00;
+    --pis-red:        #C8102E;
+    --pis-green:      #2F7D4F;
+    --pis-concrete:   #F3EFE6;
+    --pis-line:       #DAD3C2;
+    --pis-ink:        #1B1F23;
+    --pis-ink-soft:   #52585F;
+
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body:    'Work Sans', 'Segoe UI', Arial, sans-serif;
+    --font-mono:    'Space Mono', 'Courier New', monospace;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--pis-concrete);
+    color: var(--pis-ink);
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+}
+
+/* Plain table reset — no framework's .table class to lean on */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+}
+
+/* --------------------------------------------------------------------
+   Small reusable utilities, in place of Bootstrap's utility classes
+   -------------------------------------------------------------------- */
+.pis-section {
+    margin-bottom: 2.75rem;
+}
+
+.pis-section:last-child {
+    margin-bottom: 0;
+}
+
+.pis-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.9rem;
+}
+
+.pis-muted {
+    color: var(--pis-ink-soft);
+}
+
+.pis-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.pis-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* The hidden attribute must beat component rules like display:flex/grid,
+   otherwise JS that sets el.hidden = true has no visible effect. */
+[hidden] {
+    display: none !important;
+}
+
+/* Quiet secondary button — sits next to .btn-signal */
+.btn-ghost {
+    display: inline-block;
+    background: #fff;
+    color: var(--pis-navy);
+    border: 1px solid var(--pis-navy);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: calc(0.65rem - 1px) 1.3rem;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.btn-ghost:hover {
+    background: var(--pis-navy);
+    color: #fff;
+}
+
+.pis-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+}
+
+/* Station code plate — amber on navy, used on cards, FAQ, code lists */
+.pis-code-badge {
+    flex: 0 0 auto;
+    display: inline-block;
+    min-width: 2.9rem;
+    text-align: center;
+    background: var(--pis-amber);
+    color: var(--pis-navy);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    padding: 0.15rem 0.4rem;
+}
+
+/* --------------------------------------------------------------------
+   Page container & main — our own, in place of Bootstrap's .container
+   -------------------------------------------------------------------- */
+.pis-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.pis-main {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------
+   Navbar — an enamel station sign, not a default Bootstrap bar
+   -------------------------------------------------------------------- */
+.pis-navbar {
+    background-color: var(--pis-navy);
+    border-bottom: 3px solid var(--pis-amber);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.pis-navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.pis-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.pis-brand-icon {
+    color: var(--pis-amber);
+    flex: 0 0 auto;
+}
+
+.pis-brand-mark {
+    background: var(--pis-amber);
+    color: var(--pis-navy);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.25rem 0.45rem;
+    letter-spacing: 0.06em;
+}
+
+.pis-brand-sub {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+}
+
+/* Nav link list */
+.pis-nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.pis-nav-menu li {
+    margin: 0;
+}
+
+.pis-nav-link {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.82);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.92rem;
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.pis-nav-link:hover,
+.pis-nav-link:focus-visible {
+    color: var(--pis-amber);
+}
+
+.pis-nav-link.is-active {
+    color: var(--pis-amber);
+    border-bottom-color: var(--pis-amber);
+}
+
+.pis-staff-link {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    margin-left: 0.25rem;
+}
+
+/* Mobile nav toggle button (hamburger) — plain CSS + vanilla JS,
+   replacing Bootstrap's data-bs-toggle="collapse" */
+.pis-nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 0;
+    cursor: pointer;
+}
+
+.pis-nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+@media (max-width: 860px) {
+    .pis-nav-toggle {
+        display: flex;
+    }
+
+    .pis-nav-menu {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 0;
+        padding: 0.5rem 0 0.75rem;
+    }
+
+    .pis-nav-menu.is-open {
+        display: flex;
+    }
+
+    .pis-staff-link {
+        margin-left: 0;
+        margin-top: 0.4rem;
+    }
+}
+
+/* --------------------------------------------------------------------
+   Signage hero — the one bold moment on every page: a lit departure sign
+   -------------------------------------------------------------------- */
+.pis-hero {
+    background: linear-gradient(180deg, var(--pis-navy-2) 0%, var(--pis-navy) 100%);
+    color: #fff;
+    border-top: 4px solid var(--pis-amber);
+    padding: 2.75rem 2.25rem;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    animation: pis-hero-in 0.5s ease-out;
+}
+
+.pis-hero-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.pis-hero-art {
+    flex: 0 0 auto;
+    width: 160px;
+    color: var(--pis-amber);
+    opacity: 0.9;
+}
+
+.pis-hero-art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@keyframes pis-hero-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 767px) {
+    .pis-hero-art { display: none; }
+}
+
+.pis-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--pis-amber);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
+}
+
+.pis-live-clock {
+    font-variant-numeric: tabular-nums;
+}
+
+.pis-hero-eyebrow .pis-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pis-amber);
+    box-shadow: 0 0 6px 2px rgba(255, 179, 0, 0.6);
+    animation: pis-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pis-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.45; }
+}
+
+.pis-hero h1 {
+    font-size: clamp(2rem, 4.2vw, 2.9rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.pis-hero p {
+    max-width: 62ch;
+    font-size: 1.08rem;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.btn-signal {
+    display: inline-block;
+    background: var(--pis-amber);
+    color: var(--pis-navy);
+    border: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.65rem 1.4rem;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.btn-signal:hover {
+    background: #ffc233;
+    color: var(--pis-navy);
+}
+
+/* --------------------------------------------------------------------
+   Stat strip — a row of figures separated like ticket-stub perforations
+   -------------------------------------------------------------------- */
+.pis-stat-strip {
+    background: #fff;
+    border: 1px solid var(--pis-line);
+    border-top: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pis-stat {
+    flex: 1 1 0;
+    min-width: 140px;
+    text-align: center;
+    padding: 1.15rem 0.5rem;
+    border-right: 1px dashed var(--pis-line);
+}
+
+.pis-stat:last-child {
+    border-right: none;
+}
+
+.pis-stat-value {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--pis-navy);
+}
+
+.pis-stat-value.is-warning { color: var(--pis-amber-dim); }
+.pis-stat-value.is-danger  { color: var(--pis-red); }
+
+.pis-stat-label {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--pis-ink-soft);
+    letter-spacing: 0.03em;
+}
+
+/* --------------------------------------------------------------------
+   Departure board — literal split-flap styling for live schedule data
+   -------------------------------------------------------------------- */
+.pis-board-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 2.25rem 0 0.75rem;
+}
+
+.pis-board-heading h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pis-board-heading .pis-board-clock {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--pis-ink-soft);
+}
+
+.departure-board {
+    background-color: var(--pis-navy);
+    border-radius: 0;
+    padding: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--pis-navy-2);
+}
+
+.departure-board table {
+    min-width: 640px;
+}
+
+.departure-board table {
+    color: var(--pis-amber);
+    font-family: var(--font-mono);
+    margin-bottom: 0;
+}
+
+.departure-board thead th {
+    background: var(--pis-navy-2);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--pis-amber);
+    padding: 0.7rem 1rem;
+}
+
+.departure-board tbody td {
+    padding: 0.7rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    vertical-align: middle;
+}
+
+.departure-board tbody tr:hover {
+    background: rgba(255, 179, 0, 0.06);
+}
+
+.status-on_time   { color: #58C77E; font-weight: 700; }
+.status-delayed   { color: var(--pis-amber); font-weight: 700; }
+.status-cancelled { color: #FF6B6B; font-weight: 700; }
+.status-boarding  { color: #6FB7FF; font-weight: 700; }
+.status-departed  { color: #8A93A6; font-weight: 700; }
+
+/* --------------------------------------------------------------------
+   PA / announcement control — a dispatcher's call button, not a link
+   -------------------------------------------------------------------- */
+.pis-pa-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    border: 1px solid var(--pis-navy);
+    color: var(--pis-navy);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    margin-top: 1.25rem;
+}
+
+.pis-pa-button:hover {
+    background: var(--pis-navy);
+    color: #fff;
+}
+
+/* --------------------------------------------------------------------
+   Notice-board list — used for "Core Modules" instead of identical cards
+   -------------------------------------------------------------------- */
+.pis-notice-board {
+    border: 1px solid var(--pis-line);
+    background: #fff;
+}
+
+.pis-notice-row {
+    display: flex;
+    gap: 1.1rem;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--pis-line);
+}
+
+.pis-notice-row:last-child {
+    border-bottom: none;
+}
+
+.pis-notice-tag {
+    flex: 0 0 auto;
+    width: 52px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pis-navy);
+    color: var(--pis-amber);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+}
+
+.pis-notice-row h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.pis-notice-row p {
+    margin: 0;
+    color: var(--pis-ink-soft);
+    font-size: 0.92rem;
+    max-width: 65ch;
+}
+
+/* --------------------------------------------------------------------
+   Ticket-stub chips — "Built With" tags
+   -------------------------------------------------------------------- */
+.pis-ticket {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--pis-navy);
+    background: #fff;
+    border: 1px dashed var(--pis-navy);
+    padding: 0.35rem 0.7rem;
+}
+
+/* --------------------------------------------------------------------
+   Crew roster — the project team, styled like a manifest
+   -------------------------------------------------------------------- */
+.pis-roster {
+    border: 1px solid var(--pis-line);
+}
+
+.pis-roster th,
+.pis-roster td {
+    padding: 0.65rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--pis-line);
+}
+
+.pis-roster tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pis-roster thead th {
+    background: var(--pis-navy);
+    color: var(--pis-amber);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+}
+
+.pis-roster td {
+    font-size: 0.95rem;
+}
+
+.pis-roster td:first-child {
+    font-family: var(--font-mono);
+    color: var(--pis-ink-soft);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------
+   Station chips — quick station picker (departures board)
+   -------------------------------------------------------------------- */
+.pis-station-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+}
+
+.pis-station-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--pis-navy);
+    background: #fff;
+    border: 1px solid var(--pis-line);
+    padding: 0.4rem 0.85rem;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pis-station-chip:hover {
+    border-color: var(--pis-navy);
+    color: var(--pis-navy);
+}
+
+.pis-station-chip .pis-station-code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--pis-ink-soft);
+}
+
+.pis-station-chip.is-active {
+    background: var(--pis-navy);
+    border-color: var(--pis-navy);
+    color: #fff;
+}
+
+.pis-station-chip.is-active .pis-station-code {
+    color: var(--pis-amber);
+}
+
+/* --------------------------------------------------------------------
+   Board meta row — "last updated" clock + auto-refresh note
+   -------------------------------------------------------------------- */
+.pis-board-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--pis-ink-soft);
+}
+
+/* --------------------------------------------------------------------
+   Mode tabs — destination-sign style switch (Search Schedule page)
+   -------------------------------------------------------------------- */
+.pis-mode-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--pis-line);
+    margin-top: 0.5rem;
+}
+
+.pis-mode-tab {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--pis-ink-soft);
+    text-decoration: none;
+    padding: 0.65rem 1.1rem;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+}
+
+.pis-mode-tab:hover {
+    color: var(--pis-navy);
+}
+
+.pis-mode-tab.is-active {
+    color: var(--pis-navy);
+    border-bottom-color: var(--pis-amber);
+}
+
+/* --------------------------------------------------------------------
+   Search / enquiry panel
+   -------------------------------------------------------------------- */
+.pis-search-panel {
+    background: #fff;
+    border: 1px solid var(--pis-line);
+    border-top: none;
+}
+
+.pis-search-panel-head {
+    background: var(--pis-navy);
+    color: var(--pis-amber);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.6rem 1.25rem;
+}
+
+.pis-search-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.pis-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 170px;
+    flex: 1 1 170px;
+}
+
+.pis-field label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    color: var(--pis-ink-soft);
+}
+
+.pis-select,
+.pis-input {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--pis-ink);
+    background: #fff;
+    border: 1px solid var(--pis-ink-soft);
+    border-radius: 0;
+    padding: 0.5rem 0.65rem;
+}
+
+.pis-select:focus,
+.pis-input:focus {
+    outline: none;
+    border-color: var(--pis-navy);
+}
+
+.pis-search-form .btn-signal {
+    flex: 0 0 auto;
+}
+
+/* --------------------------------------------------------------------
+   Empty state — no matching results
+   -------------------------------------------------------------------- */
+.pis-empty-state {
+    border: 1px dashed var(--pis-line);
+    background: #fff;
+    padding: 1.5rem;
+    color: var(--pis-ink-soft);
+    font-size: 0.95rem;
+}
+
+.pis-empty-state strong {
+    display: block;
+    color: var(--pis-ink);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+/* --------------------------------------------------------------------
+   Filter bar — live text filter above a list (Stations, FAQ).
+   Behaviour lives in script.js ([data-pis-filter]).
+   -------------------------------------------------------------------- */
+.pis-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    margin: 1.75rem 0 1rem;
+}
+
+.pis-filter-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--pis-navy);
+}
+
+.pis-filter-input {
+    flex: 1 1 240px;
+    max-width: 420px;
+}
+
+.pis-filter-count {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--pis-ink-soft);
+}
+
+/* --------------------------------------------------------------------
+   Station directory — each card is an enamel station nameboard
+   -------------------------------------------------------------------- */
+.pis-station-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.pis-station-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--pis-line);
+}
+
+.pis-station-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--pis-navy);
+    border-bottom: 3px solid var(--pis-amber);
+    padding: 0.8rem 1rem;
+}
+
+.pis-station-card-head h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.pis-station-card-body {
+    flex: 1 1 auto;
+    padding: 0.95rem 1rem;
+}
+
+.pis-station-figures {
+    display: flex;
+    gap: 1.75rem;
+    margin-bottom: 0.7rem;
+}
+
+.pis-station-figure {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1;
+    color: var(--pis-navy);
+}
+
+.pis-station-figure span {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.74rem;
+    letter-spacing: 0.03em;
+    color: var(--pis-ink-soft);
+}
+
+.pis-station-lines {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--pis-ink-soft);
+}
+
+/* Mini departure-board strip at the foot of each card */
+.pis-next-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.6rem;
+    background: var(--pis-navy);
+    color: var(--pis-amber);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+}
+
+.pis-next-strip.is-none {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.pis-next-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.pis-station-card-links {
+    display: flex;
+    border-top: 1px solid var(--pis-line);
+}
+
+.pis-station-card-links a {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 0.65rem 0.5rem;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--pis-navy);
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.pis-station-card-links a + a {
+    border-left: 1px solid var(--pis-line);
+}
+
+.pis-station-card-links a:hover {
+    background: var(--pis-concrete);
+}
+
+/* --------------------------------------------------------------------
+   Station detail — big code plate in the hero + platform displays
+   -------------------------------------------------------------------- */
+.pis-hero-code {
+    flex: 0 0 auto;
+    background: var(--pis-amber);
+    color: var(--pis-navy);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    padding: 0.4rem 1.1rem;
+}
+
+@media (max-width: 767px) {
+    .pis-hero-code { display: none; }
+}
+
+.pis-platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+/* Each panel looks like the TFT display hanging over that platform */
+.pis-platform {
+    display: flex;
+    flex-direction: column;
+    background: var(--pis-navy);
+    border: 1px solid var(--pis-navy-2);
+}
+
+.pis-platform-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background: var(--pis-amber);
+    color: var(--pis-navy);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.9rem;
+}
+
+.pis-platform-no {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    line-height: 1;
+    margin-left: 0.2rem;
+}
+
+.pis-platform-count {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.pis-platform-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--pis-amber);
+}
+
+.pis-platform-list li {
+    display: grid;
+    grid-template-columns: 4.3rem 1fr auto;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.6rem 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pis-platform-list li:first-child {
+    border-top: none;
+}
+
+.pis-platform-time {
+    font-weight: 700;
+}
+
+.pis-platform-time small {
+    display: block;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.pis-platform-train {
+    color: #fff;
+    min-width: 0;
+}
+
+.pis-platform-working {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.pis-platform-empty {
+    margin: 0;
+    padding: 0.9rem;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* --------------------------------------------------------------------
+   Service notices — severity-coded alert list (reusable on alerts.php)
+   -------------------------------------------------------------------- */
+.pis-alert-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    border: 1px solid var(--pis-line);
+}
+
+.pis-alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--pis-line);
+    border-left: 4px solid var(--pis-navy);
+}
+
+.pis-alert-item:last-child {
+    border-bottom: none;
+}
+
+.pis-alert-level {
+    flex: 0 0 auto;
+    min-width: 5.2rem;
+    text-align: center;
+    background: var(--pis-navy);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    margin-top: 0.15rem;
+}
+
+.pis-alert-item.is-warning { border-left-color: var(--pis-amber); }
+.pis-alert-item.is-warning .pis-alert-level { background: var(--pis-amber); color: var(--pis-navy); }
+.pis-alert-item.is-critical { border-left-color: var(--pis-red); }
+.pis-alert-item.is-critical .pis-alert-level { background: var(--pis-red); }
+
+.pis-alert-msg {
+    margin: 0;
+}
+
+.pis-alert-time {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--pis-ink-soft);
+}
+
+/* --------------------------------------------------------------------
+   FAQ — topic index + native <details> accordions (no JS needed)
+   -------------------------------------------------------------------- */
+.pis-faq-layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.pis-faq-toc {
+    position: sticky;
+    top: 5rem;
+    background: #fff;
+    border: 1px solid var(--pis-line);
+}
+
+.pis-faq-toc-head {
+    background: var(--pis-navy);
+    color: var(--pis-amber);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.55rem 1rem;
+}
+
+.pis-faq-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0;
+}
+
+.pis-faq-toc a {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    color: var(--pis-ink);
+    text-decoration: none;
+}
+
+.pis-faq-toc a:hover {
+    background: var(--pis-concrete);
+    color: var(--pis-navy);
+}
+
+.pis-faq-toc a span {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--pis-ink-soft);
+}
+
+@media (max-width: 860px) {
+    .pis-faq-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .pis-faq-toc {
+        position: static;
+    }
+}
+
+.pis-faq-group {
+    margin-bottom: 2rem;
+    scroll-margin-top: 5rem; /* clear the sticky navbar when jumped to */
+}
+
+.pis-faq-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.pis-faq-group h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+}
+
+.pis-faq-list {
+    background: #fff;
+    border: 1px solid var(--pis-line);
+}
+
+.pis-faq {
+    border-bottom: 1px solid var(--pis-line);
+    scroll-margin-top: 5rem;
+}
+
+.pis-faq:last-child {
+    border-bottom: none;
+}
+
+.pis-faq summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 1.2rem;
+    font-weight: 600;
+    color: var(--pis-ink);
+    cursor: pointer;
+}
+
+.pis-faq summary::-webkit-details-marker {
+    display: none;
+}
+
+/* +/− plate instead of the browser's default triangle */
+.pis-faq summary::after {
+    content: '+';
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid var(--pis-line);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--pis-navy);
+}
+
+.pis-faq[open] summary::after {
+    content: '\2212';
+    background: var(--pis-navy);
+    border-color: var(--pis-navy);
+    color: var(--pis-amber);
+}
+
+.pis-faq summary:hover {
+    background: #FBF9F4;
+    color: var(--pis-navy);
+}
+
+.pis-faq summary:focus-visible {
+    outline: 2px solid var(--pis-amber);
+    outline-offset: -2px;
+}
+
+.pis-faq-answer {
+    max-width: 72ch;
+    padding: 0 1.2rem 1.15rem;
+    color: var(--pis-ink-soft);
+}
+
+.pis-faq-answer p {
+    margin: 0 0 0.7rem;
+}
+
+.pis-faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+.pis-faq-answer ul {
+    margin: 0 0 0.7rem;
+    padding-left: 1.2rem;
+}
+
+.pis-faq-answer li {
+    margin-bottom: 0.3rem;
+}
+
+.pis-faq-answer a {
+    color: var(--pis-navy);
+    font-weight: 600;
+}
+
+.pis-faq-answer strong {
+    color: var(--pis-ink);
+}
+
+/* Status legend — a slice of the real departure board */
+.pis-faq-answer .pis-legend {
+    list-style: none;
+    margin: 0.8rem 0;
+    padding: 0;
+    background: var(--pis-navy);
+    font-size: 0.88rem;
+}
+
+.pis-legend li {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.pis-legend li:first-child {
+    border-top: none;
+}
+
+.pis-legend li > span:first-child {
+    font-family: var(--font-mono);
+}
+
+.pis-faq-answer .pis-legend a {
+    color: var(--pis-amber);
+}
+
+/* Station code list (FAQ answer) */
+.pis-faq-answer .pis-code-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.1rem;
+    list-style: none;
+    margin: 0.7rem 0 0;
+    padding: 0;
+}
+
+.pis-code-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--pis-ink);
+}
+
+/* "Still need help?" call to action */
+.pis-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding: 1.25rem 1.5rem;
+    background: #fff;
+    border: 1px solid var(--pis-line);
+    border-left: 4px solid var(--pis-amber);
+}
+
+.pis-cta h2 {
+    margin: 0 0 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.pis-cta p {
+    margin: 0;
+    color: var(--pis-ink-soft);
+}
+
+/* --------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------- */
+.pis-footer {
+    background: var(--pis-navy);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 1.1rem 0;
+    margin-top: 2.5rem;
+    border-top: 3px solid var(--pis-amber);
+}
+
+.pis-footer-mark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--pis-amber);
+    letter-spacing: 0.06em;
+    margin-right: 0.6rem;
+}
+
+.pis-footer-text {
+    font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------
+   Accessibility: visible keyboard focus everywhere
+   -------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+.btn-signal:focus-visible {
+    outline: 2px solid var(--pis-amber);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
