@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#F3EFE6"/>
+  <circle cx="240" cy="150" r="122" fill="#10273F"/>
+  <circle cx="240" cy="150" r="108" fill="#FFFFFF"/>
+  <g stroke="#10273F" stroke-width="6" stroke-linecap="round">
+    <line x1="240" y1="52" x2="240" y2="68"/>
+    <line x1="240" y1="232" x2="240" y2="248"/>
+    <line x1="142" y1="150" x2="158" y2="150"/>
+    <line x1="322" y1="150" x2="338" y2="150"/>
+  </g>
+  <g stroke="#10273F" stroke-width="10" stroke-linecap="round">
+    <line x1="240" y1="150" x2="240" y2="96"/>
+    <line x1="240" y1="150" x2="284" y2="176"/>
+  </g>
+  <line x1="240" y1="150" x2="198" y2="118" stroke="#C8102E" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="240" cy="150" r="9" fill="#FFB300" stroke="#10273F" stroke-width="3"/>
+  <rect x="352" y="238" width="104" height="40" rx="6" fill="#10273F"/>
+  <text x="404" y="266" text-anchor="middle" font-family="Courier New, monospace" font-size="24" font-weight="700" fill="#FFB300">10:42</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#F3EFE6"/>
+  <rect y="222" width="480" height="78" fill="#DAD3C2"/>
+  <rect y="212" width="480" height="10" fill="#FFB300"/>
+  <!-- train behind the platform edge -->
+  <rect x="20" y="128" width="440" height="84" rx="16" fill="#16314F"/>
+  <rect x="20" y="176" width="440" height="8" fill="#FFB300"/>
+  <g fill="#F3EFE6">
+    <rect x="46" y="146" width="52" height="24" rx="4"/>
+    <rect x="116" y="146" width="52" height="24" rx="4"/>
+    <rect x="186" y="146" width="52" height="24" rx="4"/>
+    <rect x="256" y="146" width="52" height="24" rx="4"/>
+    <rect x="326" y="146" width="52" height="24" rx="4"/>
+    <rect x="396" y="146" width="40" height="24" rx="4"/>
+  </g>
+  <!-- hanging platform sign -->
+  <rect x="150" y="0" width="6" height="34" fill="#52585F"/>
+  <rect x="324" y="0" width="6" height="34" fill="#52585F"/>
+  <rect x="100" y="34" width="280" height="76" rx="6" fill="#10273F" stroke="#FFB300" stroke-width="3"/>
+  <rect x="118" y="50" width="34" height="10" fill="#FFB300"/>
+  <rect x="164" y="50" width="120" height="10" fill="#FFB300"/>
+  <rect x="318" y="50" width="44" height="10" fill="#58C77E"/>
+  <rect x="118" y="78" width="34" height="10" fill="#FFB300"/>
+  <rect x="164" y="78" width="96" height="10" fill="#FFB300"/>
+  <rect x="318" y="78" width="44" height="10" fill="#6FB7FF"/>
+</svg>

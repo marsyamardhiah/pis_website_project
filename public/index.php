@@ -71,77 +71,71 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="pis-hero">
-    <div class="pis-hero-art" aria-hidden="true">
-        <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-            <!-- Signage-style ETS pictogram: line art only, inherits color via currentColor -->
-            <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                <!-- pantograph -->
-                <path d="M70 26 L82 10 L94 26" />
-                <line x1="82" y1="26" x2="82" y2="34" />
-                <!-- roof line -->
-                <path d="M34 34 H196" />
-                <!-- body + rounded nose -->
-                <path d="M196 34 V78 H46 Q20 78 12 56 Q20 34 46 34 H196 Z" />
-                <!-- cab window -->
-                <rect x="24" y="44" width="22" height="18" rx="4" />
-                <!-- passenger windows -->
-                <rect x="64" y="44" width="30" height="18" rx="3" />
-                <rect x="106" y="44" width="30" height="18" rx="3" />
-                <rect x="148" y="44" width="30" height="18" rx="3" />
-                <!-- livery stripe -->
-                <line x1="20" y1="70" x2="196" y2="70" />
-                <!-- wheels -->
-                <circle cx="60" cy="90" r="10" />
-                <circle cx="110" cy="90" r="10" />
-                <circle cx="160" cy="90" r="10" />
-                <!-- rail -->
-                <path d="M4 104 H216" stroke-width="3" />
-                <path d="M24 104 V112 M60 104 V112 M96 104 V112 M132 104 V112 M168 104 V112 M204 104 V112" stroke-width="3" />
-            </g>
-        </svg>
+    <div class="pis-hero-art">
+        <img src="<?= $pis_base ?>/assets/img/hero-train.svg" alt="" width="470" height="200">
     </div>
     <div class="pis-hero-copy">
         <div class="pis-hero-eyebrow"><span class="pis-dot"></span> Network status &mdash; live, <span class="pis-live-clock" data-pis-clock></span></div>
         <h1>Passenger Information System</h1>
         <p>Departures, arrivals and service alerts for every station on the network, updated as they happen.</p>
         <a href="departures.php" class="btn-signal">View full departure board</a>
+
+        <div class="pis-next" id="pisNext">
+            <span class="pis-next-label">Next departure</span>
+            <?php if (!empty($upcoming)): $nx = $upcoming[0]; ?>
+                <strong data-next-title><?= htmlspecialchars($nx['train_no']) ?> from <?= htmlspecialchars($nx['station_name']) ?></strong>
+                <span class="pis-next-detail" data-next-detail>Platform <?= htmlspecialchars($nx['platform_no'] ?? '-') ?> &middot; <?= htmlspecialchars(date('H:i', strtotime($nx['departure_time']))) ?></span>
+            <?php else: ?>
+                <strong data-next-title>No more departures today</strong>
+                <span class="pis-next-detail" data-next-detail>Check the board again tomorrow.</span>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 
 <div class="pis-stat-strip">
     <div class="pis-stat">
-        <div class="pis-stat-value"><?= $stationCount ?></div>
+        <div class="pis-stat-value" data-stat="stations"><?= $stationCount ?></div>
         <span class="pis-stat-label">Stations</span>
     </div>
     <div class="pis-stat">
-        <div class="pis-stat-value"><?= $trainCount ?></div>
+        <div class="pis-stat-value" data-stat="trains"><?= $trainCount ?></div>
         <span class="pis-stat-label">Trains in service</span>
     </div>
     <div class="pis-stat">
-        <div class="pis-stat-value is-warning"><?= $delayedCount ?></div>
+        <div class="pis-stat-value is-warning" data-stat="delayed"><?= $delayedCount ?></div>
         <span class="pis-stat-label">Delayed now</span>
     </div>
     <div class="pis-stat">
-        <div class="pis-stat-value is-danger"><?= $activeAlerts ?></div>
+        <div class="pis-stat-value is-danger" data-stat="alerts"><?= $activeAlerts ?></div>
         <span class="pis-stat-label">Active alerts</span>
     </div>
 </div>
+
+<section class="pis-section" id="pisFavs" hidden aria-labelledby="favs-title">
+    <h2 class="pis-section-title" id="favs-title">Your stations</h2>
+    <div class="pis-station-chips" id="pisFavList"></div>
+</section>
 
 <div class="pis-board-heading">
     <h2>Upcoming departures</h2>
     <span class="pis-board-clock">Network-wide &middot; <span class="pis-live-clock" data-pis-clock></span></span>
 </div>
 
-<div class="departure-board">
+<div class="departure-board" data-pis-live
+     data-endpoint="api_board.php?mode=upcoming"
+     data-columns="train,line,station,platform,departs,status"
+     data-empty="No upcoming departures.">
     <table>
+        <caption class="pis-sr-only">The next five departures across the network, with station, platform, departure time and status</caption>
         <thead>
             <tr>
-                <th>Train</th>
-                <th>Line</th>
-                <th>Station</th>
-                <th>Platform</th>
-                <th>Departure</th>
-                <th>Status</th>
+                <th scope="col">Train</th>
+                <th scope="col">Line</th>
+                <th scope="col">Station</th>
+                <th scope="col">Platform</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -166,6 +160,11 @@ require_once __DIR__ . '/../includes/header.php';
     </table>
 </div>
 
+<p style="margin: 0.75rem 0 0;">
+    <button type="button" class="pis-refresh-btn" data-pis-refresh="30" aria-pressed="false">Pause auto-refresh</button>
+    <span id="pisLiveMsg" class="pis-muted" role="status" aria-live="polite"></span>
+</p>
+
 <button class="pis-pa-button"
         onclick="announce('Welcome to the Passenger Information System. Please check the departure board for live updates.')">
     🔊 Play welcome announcement
@@ -174,8 +173,35 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- Inline style sheet: only this one button gets this nudge, so the
      declaration sits directly on the tag instead of in style.css -->
 <button class="pis-pa-button pis-alert-btn" style="margin-left: 0.6rem;"
-        onclick="alert('<?= addslashes($delayedCount) ?> train(s) delayed and <?= addslashes($activeAlerts) ?> active alert(s) right now.')">
+        onclick="alert(document.querySelector('[data-stat=delayed]').textContent + ' train(s) delayed and ' + document.querySelector('[data-stat=alerts]').textContent + ' active alert(s) right now.')">
     ⚠️ Show active alerts
 </button>
+
+<section class="pis-section" style="margin-top: 2.5rem;" aria-labelledby="tips-title">
+    <h2 class="pis-section-title" id="tips-title">Travelling made easier</h2>
+    <div class="pis-feature-grid">
+        <article class="pis-feature">
+            <img src="<?= $pis_base ?>/assets/img/platform-board.svg" alt="A train waiting at a platform beneath a hanging departure sign that lists destinations and their status." width="480" height="300">
+            <div class="pis-feature-body">
+                <h3>Find your platform</h3>
+                <p>Every departure shows its platform number, so you know where to go before you reach the station. <a href="departures.php">Open the departure board</a>.</p>
+            </div>
+        </article>
+        <article class="pis-feature">
+            <img src="<?= $pis_base ?>/assets/img/live-clock.svg" alt="An analogue clock with a small digital display reading 10:42." width="480" height="300">
+            <div class="pis-feature-body">
+                <h3>Times you can trust</h3>
+                <p>The clock and every status follow the real time, so a train that has left no longer shows as waiting.</p>
+            </div>
+        </article>
+        <article class="pis-feature">
+            <img src="<?= $pis_base ?>/assets/img/announcement.svg" alt="A loudspeaker with sound waves coming out of it." width="480" height="300">
+            <div class="pis-feature-body">
+                <h3>Hear it, don't just read it</h3>
+                <p>Press &ldquo;Play welcome announcement&rdquo; above and your browser reads the message aloud. This helps when small print is hard to see.</p>
+            </div>
+        </article>
+    </div>
+</section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

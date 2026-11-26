@@ -1,0 +1,13 @@
+{
+  "name": "Passenger Information System",
+  "short_name": "PIS Railway",
+  "description": "Live train departures, schedule search and service alerts.",
+  "start_url": "../public/index.php",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#F4F6FA",
+  "theme_color": "#10273F",
+  "icons": [
+    { "src": "img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

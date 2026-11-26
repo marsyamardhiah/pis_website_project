@@ -32,6 +32,18 @@ require_once __DIR__ . '/../includes/header.php';
     </p>
 </section>
 
+<section class="pis-section" aria-labelledby="fit-title">
+    <h2 class="pis-section-title" id="fit-title">How the system fits together</h2>
+    <div class="pis-split">
+        <img src="<?= $pis_base ?>/assets/img/modules.svg" alt="Diagram with PIS in the centre, joined to four modules: BRD the departure board, SCH schedule search, ALR alerts and ADM the staff admin panel." width="480" height="300">
+        <p style="max-width: 62ch;">
+            Every public page reads from the same database, and the staff panel writes to it. When a
+            member of staff records a delay, the departure board, the schedule search and the alerts
+            all show it on the next page load.
+        </p>
+    </div>
+</section>
+
 <section class="pis-section">
     <h2 class="pis-section-title">Core modules</h2>
     <div class="pis-notice-board">
@@ -66,6 +78,22 @@ require_once __DIR__ . '/../includes/header.php';
                     accounts &mdash; full CRUD, with prepared statements throughout.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="pis-section" aria-labelledby="a11y-title">
+    <h2 class="pis-section-title" id="a11y-title">Designed for everyone</h2>
+    <div class="pis-split">
+        <img src="<?= $pis_base ?>/assets/img/accessibility.svg" alt="A person icon surrounded by an eye, larger letters A, a half-dark contrast circle and a loudspeaker, representing the site's accessibility features." width="480" height="300">
+        <ul>
+            <li><strong>High contrast:</strong> the departure boards use amber on navy (8.45 to 1), well above the 4.5 to 1 minimum in WCAG 2.2.</li>
+            <li><strong>Bigger text:</strong> the A&minus; / A / A+ buttons at the top enlarge text up to 150%, and the choice is remembered.</li>
+            <li><strong>High-contrast mode:</strong> one button switches to black, white and yellow.</li>
+            <li><strong>Not only colour:</strong> every train status is also written in words.</li>
+            <li><strong>Keyboard friendly:</strong> a skip link and a clear focus outline on every control.</li>
+            <li><strong>Heard as well as seen:</strong> announcements use text-to-speech, and the board's auto-refresh can be paused.</li>
+            <li><strong>Any screen:</strong> the layout adapts from phones to desktops.</li>
+        </ul>
     </div>
 </section>
 
