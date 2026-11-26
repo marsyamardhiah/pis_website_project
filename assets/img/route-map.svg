@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#F3EFE6"/>
+  <path d="M40 220 L150 220 L210 150 L330 150 L390 80 L450 80" fill="none" stroke="#10273F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40 220 L150 220 L210 150 L330 150 L390 80 L450 80" fill="none" stroke="#FFB300" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 16"/>
+  <g fill="#FFFFFF" stroke="#10273F" stroke-width="6">
+    <circle cx="40" cy="220" r="14"/>
+    <circle cx="210" cy="150" r="14"/>
+    <circle cx="330" cy="150" r="14"/>
+    <circle cx="450" cy="80" r="14"/>
+  </g>
+  <g font-family="Courier New, monospace" font-size="22" font-weight="700" fill="#10273F" text-anchor="middle">
+    <text x="48" y="262">FROM</text>
+    <text x="210" y="124">STOP</text>
+    <text x="330" y="190">STOP</text>
+    <text x="438" y="52">TO</text>
+  </g>
+</svg>

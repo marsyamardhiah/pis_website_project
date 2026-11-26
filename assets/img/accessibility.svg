@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#F3EFE6"/>
+  <!-- central person icon -->
+  <circle cx="240" cy="150" r="96" fill="#10273F"/>
+  <circle cx="240" cy="96" r="14" fill="#FFB300"/>
+  <g stroke="#FFB300" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M196 124 H284"/>
+    <path d="M240 124 V176"/>
+    <path d="M240 176 L212 224"/>
+    <path d="M240 176 L268 224"/>
+  </g>
+  <!-- eye -->
+  <path d="M30 76 Q76 36 122 76 Q76 116 30 76 Z" fill="#FFFFFF" stroke="#10273F" stroke-width="5"/>
+  <circle cx="76" cy="76" r="16" fill="#10273F"/>
+  <circle cx="82" cy="70" r="5" fill="#FFFFFF"/>
+  <!-- bigger text -->
+  <rect x="352" y="40" width="100" height="72" rx="8" fill="#FFFFFF" stroke="#10273F" stroke-width="5"/>
+  <text x="372" y="92" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#10273F">A</text>
+  <text x="400" y="96" font-family="Arial, sans-serif" font-size="46" font-weight="700" fill="#10273F">A</text>
+  <!-- contrast circle -->
+  <circle cx="404" cy="214" r="46" fill="#FFFFFF" stroke="#10273F" stroke-width="5"/>
+  <path d="M404 168 A46 46 0 0 1 404 260 Z" fill="#10273F"/>
+  <!-- speaker -->
+  <path d="M40 206 H62 L90 184 V248 L62 226 H40 Z" fill="#2F7D4F"/>
+  <g fill="none" stroke="#2F7D4F" stroke-width="6" stroke-linecap="round">
+    <path d="M104 200 Q120 216 104 232"/>
+    <path d="M118 186 Q146 216 118 246"/>
+  </g>
+</svg>

@@ -186,6 +186,16 @@ require_once __DIR__ . '/../includes/header.php';
     <?php endif; ?>
 </div>
 
+<?php if (!$searched): ?>
+    <div class="pis-split" style="margin-top: 1.75rem;">
+        <img src="<?= $pis_base ?>/assets/img/route-map.svg" alt="A railway line map showing a journey from a starting station through two stops to a destination." width="480" height="300">
+        <div>
+            <h2 class="pis-section-title">Plan a journey</h2>
+            <p style="max-width: 60ch;">Choose where you are travelling from and to, or switch tab to search by station or by time of day. Results list the platform, the time and the live status of every train.</p>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php if ($searched): ?>
     <div class="pis-board-heading" style="margin-top: 1.75rem;">
         <h2>Results</h2>
@@ -213,15 +223,16 @@ require_once __DIR__ . '/../includes/header.php';
     <?php elseif ($mode === 'route'): ?>
         <div class="departure-board">
             <table>
+                <caption class="pis-sr-only">Trains running between the two chosen stations, with departure and arrival times, platforms and status</caption>
                 <thead>
                     <tr>
-                        <th>Train</th>
-                        <th>Line</th>
-                        <th>Departs</th>
-                        <th>Platform</th>
-                        <th>Arrives</th>
-                        <th>Platform</th>
-                        <th>Status</th>
+                        <th scope="col">Train</th>
+                        <th scope="col">Line</th>
+                        <th scope="col">Departs</th>
+                        <th scope="col">Platform</th>
+                        <th scope="col">Arrives</th>
+                        <th scope="col">Platform</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -253,15 +264,16 @@ require_once __DIR__ . '/../includes/header.php';
     ?>
         <div class="departure-board">
             <table>
+                <caption class="pis-sr-only">All trains calling at the chosen station, with platform, arrival time, departure time and status</caption>
                 <thead>
                     <tr>
-                        <th>Train</th>
-                        <th>Line</th>
-                        <th>Working</th>
-                        <th>Platform</th>
-                        <th>Arrives</th>
-                        <th>Departs</th>
-                        <th>Status</th>
+                        <th scope="col">Train</th>
+                        <th scope="col">Line</th>
+                        <th scope="col">Working</th>
+                        <th scope="col">Platform</th>
+                        <th scope="col">Arrives</th>
+                        <th scope="col">Departs</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -300,14 +312,15 @@ require_once __DIR__ . '/../includes/header.php';
     <?php else: ?>
         <div class="departure-board">
             <table>
+                <caption class="pis-sr-only">Trains in the chosen time window, with station, platform, time and status</caption>
                 <thead>
                     <tr>
-                        <th>Train</th>
-                        <th>Line</th>
-                        <th>Station</th>
-                        <th>Platform</th>
-                        <th>Time</th>
-                        <th>Status</th>
+                        <th scope="col">Train</th>
+                        <th scope="col">Line</th>
+                        <th scope="col">Station</th>
+                        <th scope="col">Platform</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>

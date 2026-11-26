@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#F3EFE6"/>
+  <circle cx="240" cy="150" r="118" fill="#10273F"/>
+  <!-- loudspeaker -->
+  <path d="M168 124 H200 L246 90 V210 L200 176 H168 Z" fill="#FFB300"/>
+  <!-- sound waves (kept inside the circle) -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round">
+    <path d="M272 124 Q290 150 272 176"/>
+    <path d="M292 104 Q326 150 292 196"/>
+    <path d="M312 86 Q360 150 312 214"/>
+  </g>
+</svg>

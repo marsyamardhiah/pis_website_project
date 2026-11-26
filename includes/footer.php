@@ -8,6 +8,8 @@
     </div>
 </footer>
 
+<div id="pisToasts" class="pis-toasts" role="status" aria-live="polite"></div>
+
 <!-- Browser text-to-speech helper for announcements (Automated Audio Broadcast Module) -->
 <script>
 function announce(text) {
@@ -37,6 +39,6 @@ function announce(text) {
 })();
 </script>
 
-<script src="<?= $pis_base ?>/assets/js/script.js"></script>
+<script src="<?= $pis_base ?>/assets/js/script.js?v=<?= filemtime(__DIR__ . '/../assets/js/script.js') ?>"></script>
 </body>
 </html>

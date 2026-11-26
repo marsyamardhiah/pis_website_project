@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <rect width="480" height="300" fill="#10273F"/>
+  <g font-family="Arial, sans-serif" font-size="22" font-weight="700">
+    <rect x="40" y="26" width="26" height="26" rx="13" fill="#58C77E"/>
+    <text x="84" y="47" fill="#FFFFFF">On time</text>
+    <rect x="40" y="80" width="26" height="26" rx="13" fill="#6FB7FF"/>
+    <text x="84" y="101" fill="#FFFFFF">Boarding</text>
+    <rect x="40" y="134" width="26" height="26" rx="13" fill="#FFB300"/>
+    <text x="84" y="155" fill="#FFFFFF">Delayed (+ minutes)</text>
+    <rect x="40" y="188" width="26" height="26" rx="13" fill="#FF6B6B"/>
+    <text x="84" y="209" fill="#FFFFFF">Cancelled</text>
+    <rect x="40" y="242" width="26" height="26" rx="13" fill="#8A93A6"/>
+    <text x="84" y="263" fill="#FFFFFF">Departed</text>
+  </g>
+</svg>
